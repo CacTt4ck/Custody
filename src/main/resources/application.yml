@@ -25,6 +25,22 @@ spring:
         format_sql: true
     database: PostgreSQL
 
+  mail:
+    from-mail: sender@example.com
+    from-name: Sender Name
+    host: http.service.com
+    port: 9999
+    username: username
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+          ssl:
+            enable: true
+
 
 logging:
   level:

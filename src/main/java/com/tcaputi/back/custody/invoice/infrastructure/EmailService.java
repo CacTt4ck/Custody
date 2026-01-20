@@ -19,15 +19,18 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
+    @Value("${spring.mail.from-mail}")
     private String from;
+
+    @Value("${spring.mail.from-name}")
+    private String fromName;
 
     public void sendInvoiceByEmail(String to, String subject, String body, byte[] invoicePdf, String invoiceNumber) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom(from, "Cac Corporation");
+            helper.setFrom(from, fromName);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(body, false); // true = HTML

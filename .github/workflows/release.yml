@@ -1,0 +1,35 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+
+      - name: JDK 21 configuration
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Gradlew execution permission
+        run: chmod +x gradlew
+
+      - name: JAR build (bootJar)
+        run: ./gradlew bootJar --no-daemon
+
+      - name: GitHub Release creation
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/libs/*.jar
+          generate_release_notes: true

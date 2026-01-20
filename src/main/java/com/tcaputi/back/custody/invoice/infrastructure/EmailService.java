@@ -1,5 +1,6 @@
 package com.tcaputi.back.custody.invoice.infrastructure;
 
+import com.tcaputi.back.custody.invoice.exception.MailException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +46,9 @@ public class EmailService {
         } catch (MessagingException e) {
             log.error("Erreur lors de l'envoi de la facture {} à {}: {}",
                     invoiceNumber, to, e.getMessage(), e);
-            throw new RuntimeException("Erreur lors de l'envoi de l'email", e);
+            throw new MailException("Erreur lors de l'envoi de l'email", e);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            throw new MailException("Erreur lors de l'encodage du mail", e);
         }
     }
 
